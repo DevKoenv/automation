@@ -4,17 +4,10 @@ const path = require('path');
 const GoogleMeet = require('./google-meet');
 const chalk = require('chalk');
 const creds = require('./credentials.json');
+const package = require('./package.json');
+var data;
 const discordWebhook = require('./discord-webhook');
 const request = require('request');
-
-var data;
-
-request({
-    url: 'http://api.atlasnet.ltd/google-meet.json',
-    json: true
-  }, function(error, response, body) {
-    data = body;
-  });
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -31,9 +24,6 @@ let strict = creds.options.strict;
 obj = new GoogleMeet(email, password, head, strict);
 
 // cache store
-// kan in database
-// doe ik later misschien
-// maar is nu niet nodig
 let url = {};
 let ind = 0;
 
@@ -48,6 +38,14 @@ app.post('/postlink', (req, res) => {
     url[ind].endTime = Date.parse(req.body.endDate);
     res.redirect("/");
 });
+
+request({
+    url: 'http://api.atlasnet.ltd/google-meet.json',
+    json: true
+  }, function(error, response, body) {
+    data = body;
+  });
+
 
 const listener = app.listen(80 || process.env.PORT, () => {
 
@@ -81,12 +79,17 @@ const listener = app.listen(80 || process.env.PORT, () => {
         console.log(chalk.cyan('Strict: ' + chalk.magenta(creds.options.strict)));
         console.log(chalk.cyan('Interface: ' + chalk.magenta('http://localhost:' + creds.options.port)));
         console.log(chalk.yellow('------------------------------------------------'));
-        console.log(chalk.green('Author: ' + data.master.author));
-        console.log(chalk.green('Version: ' + data.master.version));
-        if (data.master.version > package.version) {
+        console.log(chalk.green('Author: ' + data.beta.author));
+        console.log(chalk.green('Version: ' + data.beta.version));
+        if (data.beta.version > package.version) {
             console.log(chalk.blue.bold('New Update Available!'));
         } else {
-            console.log(chalk.green('You are running the latest version'))
+            console.log(chalk.green('You are running the latest beta'))
+        }
+        if (data.beta.info = "") {
+            return;
+        } else {
+            console.log(chalk.blue.bold(data.beta.info));
         }
         console.log(chalk.yellow('------------------------------------------------'));
     }
