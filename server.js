@@ -40,7 +40,7 @@ app.post('/postlink', (req, res) => {
 });
 
 request({
-    url: 'http://api.atlasnet.ltd/google-meet.json',
+    url: 'http://api.atlasnet.ltd/automation/info.json',
     json: true
   }, function(error, response, body) {
     data = body;
@@ -79,14 +79,14 @@ const listener = app.listen(80 || process.env.PORT, () => {
         console.log(chalk.cyan('Strict: ' + chalk.magenta(creds.options.strict)));
         console.log(chalk.cyan('Interface: ' + chalk.magenta('http://localhost:' + creds.options.port)));
         console.log(chalk.yellow('------------------------------------------------'));
-        console.log(chalk.green('Author: ' + data.beta.author));
-        console.log(chalk.green('Version: ' + data.beta.version));
-        if (data.beta.version > package.version) {
+        console.log(chalk.green('Author: ' + data.master.author));
+        console.log(chalk.green('Version: ' + package.version));
+        if (data.master.version > package.version) {
             console.log(chalk.blue.bold('New Update Available!'));
         } else {
             console.log(chalk.green('You are running the latest beta'))
         }
-        if (data.beta.info = "") {
+        if (data.master.info = "") {
             return;
         } else {
             console.log(chalk.blue.bold(data.beta.info));
