@@ -24,7 +24,8 @@ class GoogleMeet {
                 args: [
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
-                    '--use-fake-ui-for-media-stream'
+                    '--use-fake-ui-for-media-stream',
+                    '--single-process'
                 ],
             });
             this.page = await this.browser.newPage()
@@ -47,8 +48,6 @@ class GoogleMeet {
             await this.page.waitForTimeout(5000)
 
             await this.page.goto(url)
-
-            console.log("inside meet page")
 
             await this.page.waitForTimeout(7000)
 

@@ -3,3 +3,8 @@ node_modules
 
 # Credentials
 credentials.json
+
+# Broken Executables
+server-linux
+server-macos
+server-win.exe

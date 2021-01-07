@@ -11,10 +11,12 @@ const request = require('request');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+function isEmptyObject(obj) {
+    return !Object.keys(obj).length;
+  }
 
 let email = creds.login.email;
 let password = creds.login.password;
@@ -40,10 +42,11 @@ app.post('/postlink', (req, res) => {
 });
 
 request({
-    url: 'http://api.atlasnet.ltd/google-meet.json',
+    url: 'http://api.atlasnet.ltd/automation/info.json',
     json: true
   }, function(error, response, body) {
     data = body;
+    infoLog()
   });
 
 
@@ -67,29 +70,26 @@ const listener = app.listen(80 || process.env.PORT, () => {
         }
     }, 1000)
     
-    	
-    setTimeout(infoLog, 1000)
     })
 
     function infoLog() {
-        console.log(chalk.yellow('------------------------------------------------'));
-        console.log(chalk.cyan('Username: ' + chalk.magenta(creds.login.email)));
-        console.log(chalk.cyan('Password: ' + chalk.magenta('************')));
-        console.log(chalk.cyan('Headless: ' + chalk.magenta(creds.options.headless)));
-        console.log(chalk.cyan('Strict: ' + chalk.magenta(creds.options.strict)));
-        console.log(chalk.cyan('Interface: ' + chalk.magenta('http://localhost:' + creds.options.port)));
-        console.log(chalk.yellow('------------------------------------------------'));
-        console.log(chalk.green('Author: ' + data.beta.author));
-        console.log(chalk.green('Version: ' + data.beta.version));
-        if (data.beta.version > package.version) {
-            console.log(chalk.blue.bold('New Update Available!'));
+        console.log(chalk.yellow('------------------------------------------------'))
+        console.log(chalk.cyan('Username: ' + chalk.magenta(creds.login.email)))
+        console.log(chalk.cyan('Password: ' + chalk.magenta('************')))
+        console.log(chalk.cyan('Headless: ' + chalk.magenta(creds.options.headless)))
+        console.log(chalk.cyan('Strict: ' + chalk.magenta(creds.options.strict)))
+        console.log(chalk.cyan('Interface: ' + chalk.magenta('http://localhost:' + creds.options.port)))
+        console.log(chalk.yellow('------------------------------------------------'))
+        console.log(chalk.green('Author: ' + data.master.author))
+        console.log(chalk.green('Version: ' + package.version))
+        if (data.master.version > package.version) {
+            console.log(chalk.blue.bold('New Update Available!'))
         } else {
-            console.log(chalk.green('You are running the latest beta'))
+            console.log(chalk.green('You are running the latest version'))
         }
-        if (data.beta.info = "") {
-            return;
+        if (isEmptyObject(data.master.info)) {
         } else {
-            console.log(chalk.blue.bold(data.beta.info));
+            console.log(chalk.blue.bold(data.master.info))
         }
-        console.log(chalk.yellow('------------------------------------------------'));
+        console.log(chalk.yellow('------------------------------------------------'))
     }
