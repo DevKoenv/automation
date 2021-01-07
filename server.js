@@ -80,16 +80,16 @@ const listener = app.listen(80 || process.env.PORT, () => {
         console.log(chalk.cyan('Strict: ' + chalk.magenta(creds.options.strict)))
         console.log(chalk.cyan('Interface: ' + chalk.magenta('http://localhost:' + creds.options.port)))
         console.log(chalk.yellow('------------------------------------------------'))
-        console.log(chalk.green('Author: ' + data.master.author))
+        console.log(chalk.green('Author: ' + data.beta.author))
         console.log(chalk.green('Version: ' + package.version))
-        if (data.master.version > package.version) {
+        if (data.beta.version > package.version) {
             console.log(chalk.blue.bold('New Update Available!'))
         } else {
             console.log(chalk.green('You are running the latest version'))
         }
-        if (isEmptyObject(data.master.info)) {
+        if (isEmptyObject(data.beta.info)) {
         } else {
-            console.log(chalk.blue.bold(data.master.info))
+            console.log(chalk.blue.bold(data.beta.info))
         }
         console.log(chalk.yellow('------------------------------------------------'))
     }
