@@ -1,10 +1,28 @@
 {
   "name": "google-meet-bot",
-  "version": "1.0.1-dev",
+  "version": "1.1.0-dev",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "rm -rf build && pkg . --out-path build",
+    "postbuild": "cp -R ./node_modules/puppeteer/.local-chromium build/chromium",
+    "fullbuild": "npm run-script postbuild && npm run-script build"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/puppeteer/**/*",
+      "node_modules/puppeteer-extra-plugin-stealth/**/*",
+      "views/**/*",
+      "public/**/*"
+    ]
+  },
+  "files": [
+    "views/**/*",
+    "public/**/*"
+  ],
+  "bin": {
+    "pkg": "server.js"
   },
   "author": "Koen van Vlimmeren",
   "license": "MIT",
@@ -14,6 +32,8 @@
     "discord-webhook-node": "^1.1.8",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "os": "^0.1.1",
+    "path": "^0.12.7",
     "puppeteer": "^5.5.0",
     "puppeteer-extra": "^3.1.15",
     "puppeteer-extra-plugin-stealth": "^2.6.5",

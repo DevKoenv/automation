@@ -105,8 +105,10 @@ class GoogleMeet {
         }
     }
 
-    async end(goodbye_message) {
+    async end() {
         await this.page.waitForTimeout(1500)
+
+        await this.page.close()
 
         await this.browser.close()
     }

@@ -11,6 +11,7 @@ const request = require('request');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -30,8 +31,9 @@ let url = {};
 let ind = 0;
 
 app.get('/', (req, res) => {
-    res.render('index', { url, email, password })
+    res.render('index.ejs', { url, email, password })
 });
+
 app.post('/postlink', (req, res) => {
     ind++;
     url[ind] = {};

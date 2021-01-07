@@ -1,10 +1,8 @@
 # Modules
-node_modules
+/node_modules
 
 # Credentials
-credentials.json
+/credentials.json
 
 # Broken Executables
-server-linux
-server-macos
-server-win.exe
+/build
